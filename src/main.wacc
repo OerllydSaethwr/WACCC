@@ -251,14 +251,23 @@ begin
 	end
 
 	int string_list_to_int(pair(pair, pair) word) is
+		int INT_MAX = 2147483647;
 		int num = 0;
 		int zero = ord '0';
 		pair(pair, pair) curr = word;
 		while curr != null do
 			pair(int, pair) chp = fst curr;
 			int chi = fst chp;
+			if num > INT_MAX / 10 then
+				exit -1
+			else skip fi;
 			num = num * 10;
-			num = num + chi - zero;
+			
+			int increase = chi - zero;
+			if num > INT_MAX - increase then
+				exit -1
+			else skip fi;
+			num = num + increase;
 			curr = snd curr
 		done;
 		return num
@@ -341,17 +350,18 @@ begin
 	int double_quotes = 34;
 	int single_quotes = 39;
 	int backslash     = 92;
+	int INT_MAX       = 2147483647;
 		
 	#############
 	### Lexer ###
 	#############
 
-	int a = 20000;
+	int a = 2000;
 	pair(pair, pair) instream = call init_list();
 	int val = call read_n(instream, a + 1);
 	instream = snd instream;
 	
-	int length = 20000;
+	int length = 2000;
 	char[] tmp = [];
 	pair(int, char[]) extoken = newpair(0, tmp);
 	pair(pair, pair) middle = newpair(extoken, null);

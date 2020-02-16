@@ -2,3 +2,6 @@
 
 cat $1 | tr " \t" "@" | tr "\n" "~" > out/out.wacc
 cat out/out.wacc | qemu-arm -L /usr/arm-linux-gnueabi/ scripts/WACCC > ass.S
+fname=$(basename "$1")
+echo $fname
+cat ass.S > out/$fname.S
