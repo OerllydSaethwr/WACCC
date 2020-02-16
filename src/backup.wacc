@@ -1,0 +1,191 @@
+begin
+	###########################################################################
+
+
+	# Initializes list with pair(0, null) as its head element.
+	pair(int, pair) init_list() is
+		pair(int, pair) p = newpair(-1, null);
+		return p
+	end
+
+	
+	# Puts integer value at the end of the list.
+	int put(pair(int, pair) list, int value) is
+		int cnt = 0;
+		pair(int, pair) curr = list;
+		pair(int, pair) next = snd list;
+		while (next != null) do
+			curr = snd curr;
+			next = snd curr;
+			cnt = cnt + 1
+		done;
+		snd curr = newpair(value, null);
+		return cnt
+	end
+
+
+	int get(pair(int, pair) list, int index) is
+		pair(int, pair) curr = list;
+		while index != 0 do
+			curr = snd curr;
+			if curr == null then
+				exit -1
+			else
+				skip
+			fi;
+			index = index - 1
+		done;
+		int val = fst curr;
+		return val
+	end
+
+	int delete(pair(int, pair) list, int index) is
+		pair(int, pair) prev = null;
+		pair(int, pair) curr = list;
+		while index != 0 do
+			prev = curr;
+			curr = snd curr;
+			if curr == null then
+				exit -1
+			else
+				skip
+			fi;
+			index = index -1
+		done;
+		snd prev = snd curr;
+		return index
+	end
+
+
+	int llen(pair(int, pair) list) is
+		int cnt = 0;
+		pair(int, pair) curr = list;
+		while (curr != null) do
+			curr = snd curr;
+			cnt = cnt + 1
+		done;
+		return cnt
+	end
+				
+
+
+	int print_list(pair(int, pair) list) is
+		pair(int, pair) curr = list;
+		int val = 0;
+		while (curr != null) do
+			val = fst curr;
+			println chr val;
+#			print " at ";
+#			println curr;
+			curr = snd curr
+		done;
+		return val
+	end
+
+	##################################################################################
+
+	bool contains(char[][] array, char[] word) is
+		int i = 0;
+		while (i < len array) do
+			char[] curr = array[i];
+			bool equals = call sequals(curr, word);
+			if equals then
+				return true
+			else
+				skip
+			fi;
+			i = i + 1
+		done;
+		return false
+	end
+
+
+	bool sequals(char[] s1, char[] s2) is
+		int i = 0;
+		if len s1 != len s2 then
+			return false
+		else	
+			while i < len s1 do
+				if s1[i] != s2[i] then
+					return false
+				else
+					skip	
+				fi;
+				i = i + 1
+			done;
+			return true
+		fi
+	end
+
+	##################################################################################
+	################################# M A I N ########################################
+	##################################################################################
+			
+	char[] abegin = ['b', 'e', 'g', 'i', 'n']; 
+	char[] aend   = ['e', 'n', 'd'];
+	char[] ais    = ['i', 's'];
+	char[] aread  = ['r', 'e', 'a', 'd'];
+	char[] afree  = ['f', 'r', 'e', 'e'];
+	char[] areturn = ['r', 'e', 't', 'u', 'r', 'n'];
+	char[] aexit  = ['e', 'x', 'i', 't'];
+	char[] aprint = ['p', 'r', 'i', 'n', 't'];
+	char[] aprintln = ['p', 'r', 'i', 'n', 't', 'l', 'n'];
+	char[] aif    = ['i', 'f'];
+	char[] athen  = ['t', 'h', 'e', 'n'];
+	char[] aelse  = ['e', 'l', 's', 'e'];
+	char[] afi    = ['f', 'i'];
+	char[] awhile = ['w', 'h', 'i', 'l', 'e'];
+	char[] ado    = ['d', 'o'];
+	char[] adone  = ['d', 'o', 'n', 'e'];
+	char[] acall  = ['c', 'a', 'l', 'l'];
+	char[] anewpair = ['n', 'e', 'w', 'p', 'a', 'i', 'r'];
+	char[] afst   = ['f', 's', 't'];
+	char[] asnd   = ['s', 'n', 'd'];
+	char[] apair  = ['p', 'a', 'i', 'r'];
+	char[] aint   = ['i', 'n', 't'];
+	char[] abool  = ['b', 'o', 'o', 'l'];
+	char[] achar  = ['c', 'h', 'a', 'r'];
+	char[] astring = ['s', 't', 'r', 'i', 'n', 'g'];
+	char[] atrue  = ['t', 'r', 'u', 'e'];
+	char[] afalse = ['f', 'a', 'l', 's', 'e'];
+	char[] anull  = ['n', 'u', 'l', 'l'];
+
+	char[][] kws = [abegin, aend, ais, aread, afree, areturn,
+			aexit, aprint, aprintln, aif, athen, aelse,
+			afi, awhile, ado, adone, acall, anewpair, afst,
+			asnd, apair, aint, abool, achar, astring, atrue,
+			afalse, anull];
+	
+	char[] pun = ['[', ']', '(', ')', ',', ';', '='];
+
+	char[] alen = ['l', 'e', 'n'];
+	char[] aord = ['o', 'r', 'd'];
+	char[] achr = ['c', 'h', 'r'];
+	char[] age  = ['>', '='];
+	char[] ale  = ['<', '='];
+	char[] ae   = ['=', '='];
+	char[] ne   = ['!', '='];
+	char[] aand = ['&', '&'];
+	char[] aor  = ['|', '|'];
+
+	char[][] ops1 = [alen, aord, achr];
+	char[]   ops2 = ['!', '-', '+', '*', '/', '%' , '<', '>'];
+	
+	int a = 200;
+	pair(int, pair) instream = call init_list();
+	while a != 0 do
+		char b = 'i';
+		read b;
+		int val = call put(instream, ord b);
+		a = a - 1
+	done;
+	
+	instream = snd instream;
+	
+	int len = call llen(instream);
+	int i = 0;
+	while i < len do
+	
+	done
+
+end

@@ -1,0 +1,476 @@
+begin
+
+	###########################################################################
+
+
+	# Initializes list with pair(0, null) as its head element.
+	pair(pair, pair) init_list() is
+		pair(pair, pair) p = newpair(null, null);
+		return p
+	end
+
+	
+	# Puts integer value at the end of the list.
+	int put_int(pair(pair, pair) list, int value) is
+		int cnt = 0;
+		pair(pair, pair) curr = list;
+		pair(pair, pair) next = snd list;
+		while (next != null) do
+			curr = snd curr;
+			next = snd curr;
+			cnt = cnt + 1
+		done;
+		pair(int, pair) p = newpair(value, null);
+		snd curr = newpair(p, null);
+		return cnt
+	end
+
+	int put_token(pair(pair, pair) list, pair(int, char[]) token) is 
+		pair(pair, pair) curr = list;
+		pair(pair, pair) next = snd list;
+		while next != null do
+			curr = snd curr;
+			next = snd curr
+		done;
+		pair(pair, pair) p = newpair(token, null);
+		snd curr = newpair(p, null);
+		return 0
+	end
+
+
+	int get(pair(pair, pair) list, int index) is
+		pair(pair, pair) curr = list;
+		while index != 0 do
+			curr = snd curr;
+			if curr == null then
+				exit -1
+			else
+				skip
+			fi;
+			index = index - 1
+		done;
+		pair(int, pair) temp = fst curr;
+		int val = fst temp;
+		return val
+	end
+
+	pair(int, char[]) get_token(pair(pair, pair) list, int index) is
+		pair(pair, pair) curr = list;
+		while index != 0 do
+			curr = snd curr;
+			if curr == null then
+				exit -1
+			else
+				skip
+			fi;
+			index = index - 1
+		done;
+		pair(pair, pair) temp = fst curr;
+		pair(int, char[]) token = fst temp;
+		return token
+	end
+
+	int delete(pair(pair, pair) list, int index) is
+		pair(pair, pair) prev = null;
+		pair(pair, pair) curr = list;
+		while index != 0 do
+			prev = curr;
+			curr = snd curr;
+			if curr == null then
+				exit -1
+			else
+				skip
+			fi;
+			index = index -1
+		done;
+		snd prev = snd curr;
+		return index
+	end
+
+
+	int llen(pair(pair, pair) list) is
+		int cnt = 0;
+		pair(pair, pair) curr = list;
+		while (curr != null) do
+			curr = snd curr;
+			cnt = cnt + 1
+		done;
+		return cnt
+	end
+				
+
+
+	int print_list(pair(pair, pair) list) is
+		pair(pair, pair) curr = list;
+		int val = 0;
+		while (curr != null) do
+			pair(int, pair) temp = fst curr;
+			val = fst temp;
+			print chr val;
+			curr = snd curr
+		done;
+		println " ";
+		return val
+	end
+
+	int print_list_token(pair(pair, pair) list) is
+		pair(pair, pair) curr = list;
+		char[] id = ['I', 'D'];
+		while curr != null do
+			pair(pair, pair) temp = fst curr;
+			pair(int, char[]) token = fst temp;
+			int val = fst token;
+			char[] kw = snd token;
+			bool equals = call sequals(id, kw);
+			print val;
+			print ", ";
+			if equals then
+				pair(pair, char[]) p = fst temp;
+				pair(pair, pair) q = fst p;
+				int _ = call print_list(q)
+			else
+				println kw
+			fi;
+			curr = snd curr
+		done;
+		return 0
+	end
+
+	##################################################################################
+
+	bool contains(char[][] array, char[] word) is
+		int i = 0;
+		while (i < len array) do
+			char[] curr = array[i];
+			bool equals = call sequals(curr, word);
+			if equals then
+				return true
+			else
+				skip
+			fi;
+			i = i + 1
+		done;
+		return false
+	end
+
+	bool contains_char(char[] word, char ch) is
+		int i = 0;
+		while i < len word do
+			if word[i] == ch then
+				return true
+			else
+				skip
+			fi;
+			i = i + 1
+		done;
+		return false
+	end
+
+
+	bool sequals(char[] s1, char[] s2) is
+		int i = 0;
+		if len s1 != len s2 then
+			return false
+		else	
+			while i < len s1 do
+				if s1[i] != s2[i] then
+					return false
+				else
+					skip	
+				fi;
+				i = i + 1
+			done;
+			return true
+		fi
+	end
+
+	bool sequals_list(pair(pair, pair) s1, pair(pair, pair) s2) is
+		int l1 = call llen(s1);
+		int l2 = call llen(s2);	
+		if l1 != l2 then
+			return false
+		else
+			skip
+		fi;
+		pair(pair, pair) curr1 = s1;
+		pair(pair, pair) curr2 = s2;
+		while curr1 != null do
+			pair(int, pair) v1 = fst curr1;
+			pair(int, pair) v2 = fst curr2;
+			int ch1 = fst v1;
+			int ch2 = fst v2;
+			if ch1 != ch2 then
+				return false
+			else 
+				skip
+			fi;
+			curr1 = snd curr1;
+			curr2 = snd curr2
+		done;
+		return true
+	end
+
+	pair(pair, pair) string_to_list(char[] word) is
+		int i = 0;
+		pair(pair, pair) list = call init_list();
+		while i < len word do
+			int val = call put_int(list, ord word[i]);
+			i = i + 1
+		done;
+		list = snd list;
+		return list
+	end
+
+	int find_char(char[] word, char elem) is
+		int i = 0;
+		while i < len word do
+			if word[i] == elem then
+				return i
+			else
+				skip
+			fi;
+			i = i + 1
+		done;
+		return -1
+	end
+
+	int find_string(char[][] array, pair(pair, pair) linkedword) is
+		int i = 0;
+		while i < len array do
+			char[] curr = array[i];
+			pair(pair, pair) linkedcurr = call string_to_list(curr);
+			bool equals = call sequals_list(linkedword, linkedcurr);
+			if equals then
+				return i
+			else
+				skip
+			fi;
+			i = i + 1
+		done;
+		return -1
+	end
+
+	int string_list_to_int(pair(pair, pair) word) is
+		int num = 0;
+		int zero = ord '0';
+		pair(pair, pair) curr = word;
+		while curr != null do
+			pair(int, pair) chp = fst curr;
+			int chi = fst chp;
+			num = num * 10;
+			num = num + chi - zero;
+			curr = snd curr
+		done;
+		return num
+	end
+
+	##################################################################################
+	##################################################################################
+
+	
+	int read_n(pair(pair, pair) inputstream, int n) is
+		while n > 0 do
+			char b = '@';
+			read b;
+			int val = call put_int(inputstream, ord b);
+			n = n - 1
+		done;
+		return 0
+	end
+
+	
+	##################################################################################
+	################################# M A I N ########################################
+	##################################################################################
+	
+	##############
+	### Tables ###
+	##############
+		
+	char[] abegin = ['b', 'e', 'g', 'i', 'n'];                   # 1 
+	char[] aend   = ['e', 'n', 'd'];			     # 2
+	char[] ais    = ['i', 's'];				     # 3
+	char[] aread  = ['r', 'e', 'a', 'd'];			     # 4
+	char[] afree  = ['f', 'r', 'e', 'e'];			     # 5
+	char[] areturn = ['r', 'e', 't', 'u', 'r', 'n'];	     # 6
+	char[] aexit  = ['e', 'x', 'i', 't'];			     # 7
+	char[] aprint = ['p', 'r', 'i', 'n', 't'];		     # 8
+	char[] aprintln = ['p', 'r', 'i', 'n', 't', 'l', 'n'];	     # 9
+	char[] aif    = ['i', 'f'];				     # 10
+	char[] athen  = ['t', 'h', 'e', 'n'];                        # 11
+	char[] aelse  = ['e', 'l', 's', 'e'];                        # 12
+	char[] afi    = ['f', 'i'];                                  # 13
+	char[] awhile = ['w', 'h', 'i', 'l', 'e'];                   # 14
+	char[] ado    = ['d', 'o'];                                  # 15
+	char[] adone  = ['d', 'o', 'n', 'e'];                        # 16
+	char[] acall  = ['c', 'a', 'l', 'l'];                        # 17
+	char[] anewpair = ['n', 'e', 'w', 'p', 'a', 'i', 'r'];       # 18
+	char[] afst   = ['f', 's', 't'];                             # 19
+	char[] asnd   = ['s', 'n', 'd'];                             # 20
+	char[] apair  = ['p', 'a', 'i', 'r'];                        # 21
+	char[] aint   = ['i', 'n', 't'];                             # 22
+	char[] abool  = ['b', 'o', 'o', 'l'];                        # 23
+	char[] achar  = ['c', 'h', 'a', 'r'];                        # 24
+	char[] astring = ['s', 't', 'r', 'i', 'n', 'g'];             # 25
+	char[] atrue  = ['t', 'r', 'u', 'e'];                        # 26
+	char[] afalse = ['f', 'a', 'l', 's', 'e'];                   # 27
+	char[] anull  = ['n', 'u', 'l', 'l'];                        # 28
+
+	char[][] kws = [abegin, aend, ais, aread, afree, areturn,
+			aexit, aprint, aprintln, aif, athen, aelse,
+			afi, awhile, ado, adone, acall, anewpair, afst,
+			asnd, apair, aint, abool, achar, astring, atrue,
+			afalse, anull];
+	
+	char[] pun = ['[', ']', '(', ')', ',', ';', '='];
+
+	char[] alen = ['l', 'e', 'n'];
+	char[] aord = ['o', 'r', 'd'];
+	char[] achr = ['c', 'h', 'r'];
+	char[] age  = ['>', '='];
+	char[] ale  = ['<', '='];
+	char[] ae   = ['=', '='];
+	char[] ne   = ['!', '='];
+	char[] aand = ['&', '&'];
+	char[] aor  = ['|', '|'];
+
+	char[][] ops1 = [alen, aord, achr, age, ale, ae, ne, aand, aor];
+	char[]   ops2 = ['!', '-', '+', '*', '/', '%' , '<', '>'];
+	char[]   digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+	
+	int double_quotes = 34;
+	int single_quotes = 39;
+	int backslash     = 92;
+		
+	#############
+	### Lexer ###
+	#############
+
+	int a = 10000;
+	pair(pair, pair) instream = call init_list();
+	int val = call read_n(instream, a + 1);
+	instream = snd instream;
+	
+	int length = 10000;
+	char[] tmp = [];
+	pair(int, char[]) extoken = newpair(0, tmp);
+	pair(pair, pair) middle = newpair(extoken, null);
+	pair(pair, pair) tokenstream = newpair(middle, null);
+	int i = 0;
+	while i < length do
+		int chi = call get(instream, i);
+		char ch  = chr chi;
+
+		int is_pun = call find_char(pun, ch);
+		int is_op2 = call find_char(ops2, ch);
+		int is_digit = call find_char(digits, ch);	
+		
+		if is_pun != -1 then
+			char[] arr = [ch];
+			pair(int, char[]) token = newpair(ord pun[is_pun], arr);
+			int val = call put_token(tokenstream, token)
+		else if is_op2 != -1 then
+			char[] arr = [ch];
+			pair(int, char[]) token = newpair(ord ops2[is_op2], arr);
+			int val = call put_token(tokenstream, token)
+		else if ch == '@' || ch == '~' then
+			skip
+		else if ch == '#' then
+			while ch != '~' do
+				i = i + 1;
+				chi = call get(instream, i);
+				ch = chr chi
+			done;
+			i = i - 1
+		else if chi == single_quotes then
+			i = i + 1;
+			chi = call get(instream, i);
+			ch = chr chi;
+			
+			if chi == backslash then
+				i = i + 1;
+				chi = call get(instream, i);
+				ch = chr chi
+			else skip fi;
+			char[] char_lit = ['C', 'H', 'A', 'R', '_', 'L', 'I', 'T'];
+			pair(int, char[]) token = newpair(ord ch, char_lit);
+			val = call put_token(tokenstream, token);
+			i = i + 1
+		else if chi == double_quotes then
+			i = i + 1;
+			chi = call get(instream, i);
+			ch = chr chi;
+			pair(pair, pair) content = call init_list();
+			while chi != double_quotes && i < length do
+				int val = call put_int(content, chi);
+				i = i + 1;
+				chi = call get(instream, i);
+				ch = chr chi;
+				if chi == backslash then
+					i = i + 1;
+					chi = call get(instream, i);
+					ch = chr chi;
+					if chi == double_quotes then
+						val = call put_int(content, chi);
+						i = i + 1;
+						chi = call get(instream, i);
+						ch = chr chi
+					else skip fi
+				else skip fi
+			done;
+			content = snd content;
+			char[] string_lit = ['S', 'T', 'R', '_', 'L', 'I', 'T'];
+			pair(pair, pair) p = newpair(content, null);
+			pair(pair, pair) q = newpair(p, null);
+			pair(int, pair)  r = fst q;
+			int addr = fst r;
+			pair(int, char[]) token = newpair(addr, string_lit);
+			val = call put_token(tokenstream, token)
+		else
+			pair(pair, pair) newword = call init_list();
+			int is_pun = -1;
+			int is_op2 = -1;
+			while ch != '@' && ch != '~' && is_pun == -1 && is_op2 == -1 && i < length do
+				int val = call put_int(newword, chi);
+				i = i + 1;
+				chi = call get(instream, i);
+				ch = chr chi;
+				is_pun = call find_char(pun, ch);
+				is_op2 = call find_char(ops2, ch)
+			done;
+			newword = snd newword;
+			int is_kw = call find_string(kws, newword);
+			int is_op1 = call find_string(ops1, newword);
+			
+			if is_kw != -1 then
+				pair(int, char[]) token = newpair(is_kw, kws[is_kw]);
+				int val = call put_token(tokenstream, token)
+			else if is_op1 != -1 then
+				pair(int, char[]) token = newpair(is_op1, ops1[is_op1]);
+				int val = call put_token(tokenstream, token)
+			else if is_digit != -1 then
+				char[] num = ['I', 'N', 'T', '_', 'L', 'I', 'T'];
+				int x = call string_list_to_int(newword);
+				pair(int, char[]) token = newpair(x, num);
+				int val = call put_token(tokenstream, token)
+			else
+				char[] id = ['I', 'D'];
+				pair(pair, pair) p = newpair(newword, null);
+				pair(pair, pair) q = newpair(p, null);
+				pair(int, pair)  r = fst q;
+				int addr = fst r;
+				pair(int, char[]) token = newpair(addr, id);
+				int val = call put_token(tokenstream, token)
+			fi fi fi;
+			i = i - 1
+		fi fi fi fi fi fi;
+		i = i + 1
+	done;
+	tokenstream = snd tokenstream;
+	val = call print_list_token(tokenstream)
+	
+	##############
+	### Parser ###
+	##############
+
+end

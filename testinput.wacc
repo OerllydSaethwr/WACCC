@@ -1,0 +1,8 @@
+begin
+	char a = '@';
+	int big = -2847593;
+	while a != '.' do
+		read a;
+		println a
+	done
+end

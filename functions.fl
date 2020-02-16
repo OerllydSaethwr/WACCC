@@ -1,0 +1,30 @@
+data TOKEN = pair(key, value);
+
+data LINKEDLIST = pair(pair, pair);
+
+
+int put_int(LINKEDLIST list, int value);
+
+int put_token(LINKEDLIST list, TOKEN token);
+
+int get(LINKEDLIST list, int index);
+
+TOKEN get_token(LINKEDLIST list, int index);
+
+int delete(LINKEDLIST list, int index);
+
+int llen(LINKEDLIST list);
+
+int print_list(LINKEDLIST);
+
+bool contains(char[][] array, char[] word);
+
+bool contains_char(char[] word, char ch);
+
+bool sequals(char[] s1, char[] s2);
+
+LINKEDLIST string_to_list(char[] word);
+
+bool sequals_list(LINKEDLIST s1, LINKEDLIST s2);
+
+int find_char(char[] word, char elem);
