@@ -346,12 +346,12 @@ begin
 	### Lexer ###
 	#############
 
-	int a = 10000;
+	int a = 20000;
 	pair(pair, pair) instream = call init_list();
 	int val = call read_n(instream, a + 1);
 	instream = snd instream;
 	
-	int length = 10000;
+	int length = 20000;
 	char[] tmp = [];
 	pair(int, char[]) extoken = newpair(0, tmp);
 	pair(pair, pair) middle = newpair(extoken, null);

@@ -1,8 +1,11 @@
 begin
 	char a = '@';
 	int big = -2847593;
-	while a != '.' do
+	int cnt = 20000;
+	while cnt > 0 do
+		char b = ']';
 		read a;
-		println a
+		println a;
+		cnt = cnt - 1
 	done
 end
